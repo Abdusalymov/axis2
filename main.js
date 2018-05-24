@@ -31,6 +31,7 @@ inputA.addEventListener('input', function(){
 	if(inputA.value == random_a){
 		inputA.style.color = 'black';
 		box_a.classList.remove('wrong_number');
+		inputA.value = '';
 		wrapper_a.innerHTML = random_a;
 		period2.style.display = 'flex';
 		
@@ -45,6 +46,7 @@ inputB.addEventListener('input', function(){
 	if(inputB.value == random_b){
 		inputB.style.color = 'black';
 		box_b.classList.remove('wrong_number');
+		inputB.value = '';
 		wrapper_b.innerHTML = random_b;
 		box_c.innerHTML = '';
 		box_c.appendChild(create_inputeC);
