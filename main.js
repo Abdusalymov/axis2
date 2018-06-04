@@ -85,7 +85,7 @@ create_inputeC.addEventListener('input', function(){
 })
 
 function lengthSection(){
-		period1.lastElementChild.setAttribute('src', `section_${random_a}.svg`)
-		period2.lastElementChild.setAttribute('src', `section_${random_b}.svg`)
+		period1.lastElementChild.setAttribute('src', `images/section_${random_a}.svg`)
+		period2.lastElementChild.setAttribute('src', `images/section_${random_b}.svg`)
 }
 lengthSection();
