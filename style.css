@@ -8,14 +8,13 @@
 }
 .task_field{
 	font: 3rem Arial;
-	
 }
 .answer{
 	width: 54px;
+	height: 37px;
 	border-radius: 3px;
 	border: 1px solid grey;
-	font: 2.8rem Arial;
-	
+	font: 3rem Arial;
 }
 .numerical_axis{
 	display: flex;
@@ -24,44 +23,53 @@
 .numerical_axis .arrow{
 	width: 100%;
 }
+.scale{
+	text-align: center;
+}
 .wrong_number{
 	background-color: orange;
 	border-radius: 3px;
 }
-
 .wrapper_arrow{
 	display: flex;
 	justify-content: flex-start;
 	height: 100%;
-	width: 92%;
+	width: 806px;
 	margin: auto;
-	z-index: 10;
-	margin-bottom: -25px;
+	margin-bottom: -23px;
 }
 #a,
 #b{
 	border: 1px solid grey;
 	border-radius: 3px;
 	width: 14px;
-	font: 1rem Arial;
+	font: 20px Arial;
 	text-align: center;
 }
-
 .period1{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 48.5%;
+	justify-content: flex-end;
+	z-index: 900;
 }
 .period2{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: flex-end;
-	width: 19.4%;
+	margin-left: -3px;
+	margin-bottom: 2px;
 	display: none;
+	z-index: 1000;
+}
+.period1 img,
+.period2 img{
+	width: 100%;
 }
 .wrapper_a,
 .wrapper_b{
-	font: 1.5rem Arial;
+	font: 20px Arial;
+	margin-bottom: 8px;
 }
+
