@@ -1,91 +1,127 @@
-let random_a = Math.floor(6 + Math.random()*4);
-let random_c = Math.floor(11 + Math.random()*4);
-let random_b = random_c - random_a;
+document.addEventListener("DOMContentLoaded", function (event) {
+	const wrapper = document.querySelector('.wrapper');
+	activatePeriod.SetArrowWidth();
 
-
-
-const wrapper_a = document.querySelector('.wrapper_a');
-const wrapper_b = document.querySelector('.wrapper_b');
-
-const box_a = document.querySelector('.box_a');
-const box_b = document.querySelector('.box_b');
-const box_c = document.querySelector('.box_c');
-box_a.innerHTML = random_a;
-box_b.innerHTML = random_b;
-
-
-const period1 = document.querySelector('.period1');
-const period2 = document.querySelector('.period2');
-period1.style.width = 4.89 * random_a +'%';
-period2.style.width = 4.91 * random_b +'%';
-
-
-const inputA = document.querySelector('#a');
-const inputB = document.querySelector('#b');
-inputA.onkeypress = function (e) {
-	return noString(e);
-}
-
-inputB.onkeypress = function (e) {
-	return noString(e);
-}
+	wrapper.addEventListener('input', function(e){
+		if(e.target.id == 'a') inputChekNumber1.chekNumber(e.target);
+		if(e.target.id == 'b') inputChekNumber2.chekNumber(e.target);
+		if(e.target.id == 'c') inputChekNumber3.chekNumber(e.target);
+	})
+	wrapper.onkeypress = function(e){
+		return noString(e); 
+	}
+});
 
 function noString(e){
-  return !(/[А-Яа-яA-Za-z ]/.test(String.fromCharCode(e.charCode)));
-
+	return !(/[А-Яа-яA-Za-z ]/.test(String.fromCharCode(e.charCode)));
 }
 
-let create_inputeC = document.createElement('input')
-create_inputeC.setAttribute('type', 'text');
-create_inputeC.setAttribute('maxlength', 2);
-create_inputeC.className = 'answer';
-create_inputeC.onkeypress = function (e) {
-	return noString(e);
+function RandoNum() {
+
+	let random_a = Math.floor(6 + Math.random() * 4);
+	let random_c = Math.floor(11 + Math.random() * 4);
+	let random_b = random_c - random_a;
+	let nums = [random_a, random_b, random_c];
+
+	this.getRanNum = function (num) {
+		return nums[num];
+	}
+}
+let randoNum = new RandoNum;
+
+function ActivatePeriod(){
+	const period1 = document.querySelector('.period1');
+	const period2 = document.querySelector('.period2');
+	activeArrow = function(){
+		period1.lastElementChild.setAttribute('src', `images/section_${randoNum.getRanNum(0)}.svg`);
+		period2.lastElementChild.setAttribute('src', `images/section_${randoNum.getRanNum(1)}.svg`);
+	}
+
+	this.SetArrowWidth = function(){
+		period1.style.width = 4.89 * randoNum.getRanNum(0) +'%';
+		period2.style.width = 4.91 * randoNum.getRanNum(1) +'%';
+		activeArrow();
+	}
+
+	this.getPeriod = function(){
+		return period2;
+	}
+
+}
+let activatePeriod = new ActivatePeriod();
+
+function PasteNumbers() {
+	let box_a = document.querySelector('.box_a');
+	let box_b = document.querySelector('.box_b');
+	this.paste = function () {
+		box_a.innerHTML = randoNum.getRanNum(0);
+		box_b.innerHTML = randoNum.getRanNum(1);
+	}
+	this.getBox = function(boxLock){
+		let box = document.querySelector(boxLock);
+		return box;
+	}
+}
+let pasteNumbers = new PasteNumbers;
+pasteNumbers.paste();
+
+function InputChekNumberMain(random0, litera, wrapper, box, ident) {
+	this.lit = document.querySelector(litera);
+	this.ident = document.querySelector(ident);
+	this.box = box;
+	this.wrapper = wrapper;
+	this.random0 = random0;
+	
+}
+ InputChekNumberMain.prototype.chekNumber = function (data) {
+	if (randoNum.getRanNum(this.random0) == data.value) {
+		this.changeColor(data, 'black');
+		this.highlightError(false);
+		this.inputOff(data);
+		this.activedNextInput();
+	} else {
+		this.changeColor(data, 'red');
+		this.highlightError(true);
+	}
 }
 
-inputA.addEventListener('input', function(){
-	if(inputA.value == random_a){
-		inputA.style.color = 'black';
-		box_a.classList.remove('wrong_number');
-		inputA.value = '';
-		wrapper_a.innerHTML = random_a;
-		period2.style.display = 'flex';
-		inputB.focus();
-	}
-	else{ 
-		inputA.style.color = 'red';
-		box_a.classList.add('wrong_number');
-	}
-})
-
-inputB.addEventListener('input', function(){
-	if(inputB.value == random_b){
-		inputB.style.color = 'black';
-		box_b.classList.remove('wrong_number');
-		inputB.value = '';
-		wrapper_b.innerHTML = random_b;
-		box_c.innerHTML = '';
-		box_c.appendChild(create_inputeC);
-		create_inputeC.focus();
-	}
-	else{ 
-		inputB.style.color = 'red';
-		box_b.classList.add('wrong_number');
-	}
-})
-
-create_inputeC.addEventListener('input', function(){
-	if(create_inputeC.value == random_c){
-		create_inputeC.style.color = 'black';
-		box_c.innerHTML = random_c;
-	}
-	else{ 
-		create_inputeC.style.color = 'red';
-	}
-})
-
-function lengthSection(){
-		period1.lastElementChild.setAttribute('src', `images/section_${random_a}.svg`)
-		period2.lastElementChild.setAttribute('src', `images/section_${random_b}.svg`)
+ InputChekNumberMain.prototype.changeColor = function (data, color) {
+	data.style.color = color;
+};
+ InputChekNumberMain.prototype.highlightError = function(bool){
+	if(bool) pasteNumbers.getBox(	this.box).classList.add('wrong_number');
+	else pasteNumbers.getBox(	this.box).classList.remove('wrong_number');
 }
-lengthSection();
+ InputChekNumberMain.prototype.inputOff = function(data){
+	let area = document.querySelector(this.wrapper)
+	data.value = '';
+	area.innerHTML = randoNum.getRanNum(this.random0);
+}
+
+let inputChekNumber1 = new InputChekNumberMain(0, '#b', '.wrapper_a','.box_a','#a');
+let inputChekNumber2 = new InputChekNumberMain(1, '#c', '.wrapper_b', '.box_b', '#b');
+let inputChekNumber3 = new InputChekNumberMain(2, '#c', '.box_c', null, '.box_c');
+
+inputChekNumber1.activedNextInput = function(){
+	activatePeriod.getPeriod().style.display = 'flex';
+	this.lit.focus();
+}
+
+inputChekNumber2.activedNextInput = function () {
+	let inputeC = document.createElement('input')
+	inputeC.setAttribute('type', 'text');
+	inputeC.setAttribute('maxlength', 2);
+	inputeC.setAttribute('id', 'c');
+	inputeC.className = 'answer';
+	pasteNumbers.getBox('.box_c').innerHTML = '';
+	pasteNumbers.getBox('.box_c').appendChild(inputeC);
+	inputeC.focus();
+}	
+inputChekNumber3.chekNumber = function (data) {
+	if (randoNum.getRanNum(this.random0) == data.value) {
+		this.changeColor(data, 'black');
+		this.inputOff(data);
+	} else {
+		this.changeColor(data, 'red');
+	}
+};
