@@ -16,53 +16,64 @@ function noString(e){
 	return !(/[А-Яа-яA-Za-z ]/.test(String.fromCharCode(e.charCode)));
 }
 
-function RandoNum() {
-
+let RandoNum = (function(){
 	let random_a = Math.floor(6 + Math.random() * 4);
 	let random_c = Math.floor(11 + Math.random() * 4);
 	let random_b = random_c - random_a;
 	let nums = [random_a, random_b, random_c];
 
-	this.getRanNum = function (num) {
-		return nums[num];
+	function RandoNumConstructor(){
+		RandoNum.prototype.getRanNum = function (num) {
+			return nums[num];
+		}
 	}
-}
-let randoNum = new RandoNum;
+	return RandoNumConstructor;
+})();
+let randoNum = new RandoNum();
 
-function ActivatePeriod(){
+let ActivatePeriod  = (function(){
 	const period1 = document.querySelector('.period1');
 	const period2 = document.querySelector('.period2');
-	activeArrow = function(){
+
+	let activeArrow = function(){
 		period1.lastElementChild.setAttribute('src', `images/section_${randoNum.getRanNum(0)}.svg`);
 		period2.lastElementChild.setAttribute('src', `images/section_${randoNum.getRanNum(1)}.svg`);
 	}
 
-	this.SetArrowWidth = function(){
-		period1.style.width = 4.89 * randoNum.getRanNum(0) +'%';
-		period2.style.width = 4.91 * randoNum.getRanNum(1) +'%';
-		activeArrow();
-	}
+	function ActivatePeriodConstructor(){
+		ActivatePeriodConstructor.prototype.SetArrowWidth = function(){
+			period1.style.width = 4.89 * randoNum.getRanNum(0) +'%';
+			period2.style.width = 4.91 * randoNum.getRanNum(1) +'%';
+			activeArrow();
+		}
 
-	this.getPeriod = function(){
-		return period2;
+		ActivatePeriodConstructor.prototype.getPeriod = function(){
+			return period2;
+		}
 	}
-
-}
+	return ActivatePeriodConstructor;
+})();
 let activatePeriod = new ActivatePeriod();
 
-function PasteNumbers() {
+let PasteNumbers = (function () {
 	let box_a = document.querySelector('.box_a');
 	let box_b = document.querySelector('.box_b');
-	this.paste = function () {
-		box_a.innerHTML = randoNum.getRanNum(0);
-		box_b.innerHTML = randoNum.getRanNum(1);
+
+	function PasteNumbersConstructor() {
+		PasteNumbers.prototype.paste = function () {
+			box_a.innerHTML = randoNum.getRanNum(0);
+			box_b.innerHTML = randoNum.getRanNum(1);
+		}
+		PasteNumbers.prototype.getBox = function (boxLock) {
+			let box = document.querySelector(boxLock);
+			return box;
+		}
 	}
-	this.getBox = function(boxLock){
-		let box = document.querySelector(boxLock);
-		return box;
-	}
-}
-let pasteNumbers = new PasteNumbers;
+
+	return PasteNumbersConstructor;
+
+})();
+let pasteNumbers = new PasteNumbers();
 pasteNumbers.paste();
 
 function InputChekNumberMain(random0, litera, wrapper, box, ident) {
