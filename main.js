@@ -3,9 +3,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
 	arrow.setWidth();
 
 	wrapper.addEventListener('input', function(e){
-		if(e.target.id == 'a') inputChekNumber1.chekNumber(e.target);
-		if(e.target.id == 'b') inputChekNumber2.chekNumber(e.target);
-		if(e.target.id == 'c') inputChekNumber3.chekNumber(e.target);
+		if(e.target.id == 'a') input_1.chekNumber(e.target);
+		if(e.target.id == 'b') input_2.chekNumber(e.target);
+		if(e.target.id == 'c') input_3.chekNumber(e.target);
 	})
 	wrapper.onkeypress = function(e){
 		return noString(e); 
@@ -21,7 +21,7 @@ let RandomNumbers = (function(){
 	let amount = Math.floor(11 + Math.random() * 4);
 	let summand_2 = amount - summand_1;
 	let nums = [summand_1, summand_2, amount];
-
+	console.log(window == summand_1);
 	function RandomNumbersConstructor(){
 		RandomNumbers.prototype.getNum = function (num) {
 			return nums[num];
@@ -76,49 +76,49 @@ let TaskСontainer = (function () {
 let taskСontainer = new TaskСontainer();
 taskСontainer.insert();
 
-function InputChekNumberMain(random0, litera, wrapper, box, ident) {
-	this.lit = document.querySelector(litera);
+function Input(number, idInput, placeNumber, boxNumber, ident) {
+	this.idInput = document.querySelector(idInput);
 	this.ident = document.querySelector(ident);
-	this.box = box;
-	this.wrapper = wrapper;
-	this.random0 = random0;
-	
+	this.boxNumber = boxNumber;
+	this.placeNumber = placeNumber;
+	this.number = number;
 }
- InputChekNumberMain.prototype.chekNumber = function (data) {
-	if (randomNumbers.getNum(this.random0) == data.value) {
+
+ Input.prototype.chekNumber = function (data) {
+	if (randomNumbers.getNum(this.number) == data.value) {
 		this.changeColor(data, 'black');
 		this.highlightError(false);
-		this.inputOff(data);
-		this.activedNextInput();
+		this.removeInput(data);
+		this.activateNextInput();
 	} else {
 		this.changeColor(data, 'red');
 		this.highlightError(true);
 	}
 }
 
- InputChekNumberMain.prototype.changeColor = function (data, color) {
+ Input.prototype.changeColor = function (data, color) {
 	data.style.color = color;
 };
- InputChekNumberMain.prototype.highlightError = function(bool){
-	if(bool) taskСontainer.getBox(	this.box).classList.add('wrong_number');
-	else taskСontainer.getBox(	this.box).classList.remove('wrong_number');
+ Input.prototype.highlightError = function(bool){
+	if(bool) taskСontainer.getBox(	this.boxNumber).classList.add('wrong_number');
+	else taskСontainer.getBox(	this.boxNumber).classList.remove('wrong_number');
 }
- InputChekNumberMain.prototype.inputOff = function(data){
-	let area = document.querySelector(this.wrapper)
+ Input.prototype.removeInput = function(data){
+	let area = document.querySelector(this.placeNumber)
 	data.value = '';
-	area.innerHTML = randomNumbers.getNum(this.random0);
+	area.innerHTML = randomNumbers.getNum(this.number);
 }
 
-let inputChekNumber1 = new InputChekNumberMain(0, '#b', '.wrapper_a','.box_a','#a');
-let inputChekNumber2 = new InputChekNumberMain(1, '#c', '.wrapper_b', '.box_b', '#b');
-let inputChekNumber3 = new InputChekNumberMain(2, '#c', '.box_c', null, '.box_c');
+let input_1 = new Input(0, '#b', '.wrapper_a','.box_a','#a');
+let input_2 = new Input(1, '#c', '.wrapper_b', '.box_b', '#b');
+let input_3 = new Input(2, '#c', '.box_c', null, '.box_c');
 
-inputChekNumber1.activedNextInput = function(){
+input_1.activateNextInput = function(){
 	arrow.enable ().style.display = 'flex';
-	this.lit.focus();
+	this.idInput.focus();
 }
 
-inputChekNumber2.activedNextInput = function () {
+input_2.activateNextInput = function () {
 	let inputeC = document.createElement('input')
 	inputeC.setAttribute('type', 'text');
 	inputeC.setAttribute('maxlength', 2);
@@ -128,10 +128,10 @@ inputChekNumber2.activedNextInput = function () {
 	taskСontainer.getBox('.box_c').appendChild(inputeC);
 	inputeC.focus();
 }	
-inputChekNumber3.chekNumber = function (data) {
-	if (randomNumbers.getNum(this.random0) == data.value) {
+input_3.chekNumber = function (data) {
+	if (randomNumbers.getNum(this.number) == data.value) {
 		this.changeColor(data, 'black');
-		this.inputOff(data);
+		this.removeInput(data);
 	} else {
 		this.changeColor(data, 'red');
 	}
