@@ -16,12 +16,11 @@ function noString(e){
 	return !(/[А-Яа-яA-Za-z ]/.test(String.fromCharCode(e.charCode)));
 }
 
-let RandomNumbers = (function(){
-	let summand_1 = Math.floor(6 + Math.random() * 4);
-	let amount = Math.floor(11 + Math.random() * 4);
-	let summand_2 = amount - summand_1;
-	let nums = [summand_1, summand_2, amount];
-	console.log(window == summand_1);
+const RandomNumbers = (function(){
+	const summand_1 = Math.floor(6 + Math.random() * 4);
+	const amount = Math.floor(11 + Math.random() * 4);
+	const summand_2 = amount - summand_1;
+	const nums = [summand_1, summand_2, amount];
 	function RandomNumbersConstructor(){
 		RandomNumbers.prototype.getNum = function (num) {
 			return nums[num];
@@ -29,13 +28,13 @@ let RandomNumbers = (function(){
 	}
 	return RandomNumbersConstructor;
 })();
-let randomNumbers = new RandomNumbers();
+const randomNumbers = new RandomNumbers();
 
-let Arrow  = (function(){
+const Arrow  = (function(){
 	const arrowContainer1 = document.querySelector('.period1');
 	const arrowContainer2 = document.querySelector('.period2');
 
-	let activeArrow = function(){
+	const activeArrow = function(){
 		arrowContainer1.lastElementChild.setAttribute('src', `images/section_${randomNumbers.getNum(0)}.svg`);
 		arrowContainer2.lastElementChild.setAttribute('src', `images/section_${randomNumbers.getNum(1)}.svg`);
 	}
@@ -53,11 +52,11 @@ let Arrow  = (function(){
 	}
 	return ArrowConstructor;
 })();
-let arrow = new Arrow();
+const arrow = new Arrow();
 
-let TaskСontainer = (function () {
-	let boxSummand_1 = document.querySelector('.box_a');
-	let boxSummand_2 = document.querySelector('.box_b');
+const TaskСontainer = (function () {
+	const boxSummand_1 = document.querySelector('.box_a');
+	const boxSummand_2 = document.querySelector('.box_b');
 
 	function TaskСontainerConstructor() {
 		TaskСontainer.prototype.insert = function () {
@@ -65,7 +64,7 @@ let TaskСontainer = (function () {
 			boxSummand_2.innerHTML = randomNumbers.getNum(1);
 		}
 		TaskСontainer.prototype.getBox = function (boxLock) {
-			let box = document.querySelector(boxLock);
+			const box = document.querySelector(boxLock);
 			return box;
 		}
 	}
@@ -73,7 +72,7 @@ let TaskСontainer = (function () {
 	return TaskСontainerConstructor;
 
 })();
-let taskСontainer = new TaskСontainer();
+const taskСontainer = new TaskСontainer();
 taskСontainer.insert();
 
 function Input(number, idInput, placeNumber, boxNumber, ident) {
@@ -104,14 +103,14 @@ function Input(number, idInput, placeNumber, boxNumber, ident) {
 	else taskСontainer.getBox(	this.boxNumber).classList.remove('wrong_number');
 }
  Input.prototype.removeInput = function(data){
-	let area = document.querySelector(this.placeNumber)
+	const area = document.querySelector(this.placeNumber)
 	data.value = '';
 	area.innerHTML = randomNumbers.getNum(this.number);
 }
 
-let input_1 = new Input(0, '#b', '.wrapper_a','.box_a','#a');
-let input_2 = new Input(1, '#c', '.wrapper_b', '.box_b', '#b');
-let input_3 = new Input(2, '#c', '.box_c', null, '.box_c');
+const input_1 = new Input(0, '#b', '.wrapper_a','.box_a','#a');
+const input_2 = new Input(1, '#c', '.wrapper_b', '.box_b', '#b');
+const input_3 = new Input(2, '#c', '.box_c', null, '.box_c');
 
 input_1.activateNextInput = function(){
 	arrow.enable ().style.display = 'flex';
@@ -119,7 +118,7 @@ input_1.activateNextInput = function(){
 }
 
 input_2.activateNextInput = function () {
-	let inputeC = document.createElement('input')
+	const inputeC = document.createElement('input')
 	inputeC.setAttribute('type', 'text');
 	inputeC.setAttribute('maxlength', 2);
 	inputeC.setAttribute('id', 'c');
